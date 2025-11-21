@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1091615714010",
+    "project_id": "burritosmedallas-69dde",
+    "storage_bucket": "burritosmedallas-69dde.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1091615714010:android:2421b05ba9b1f8e71753e3",
+        "android_client_info": {
+          "package_name": "com.gutierrez_rodriguez.burritosmedallas"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCy8WskchhQpWqZN_6LVDoofRh1TIsJ0ic"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
