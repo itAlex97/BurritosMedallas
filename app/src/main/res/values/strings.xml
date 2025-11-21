@@ -1,3 +1,25 @@
 <resources>
-    <string name="app_name">BurritosMedallas</string>
+    <string name="app_name">Burritos Medallas</string>
+
+    <!-- Pantalla de Login -->
+    <string name="login_title">Inicio de sesión</string>
+    <string name="login_email_label">Email</string>
+    <string name="login_email_hint">ejemplo@correo.com</string>
+    <string name="login_password_label">Contraseña</string>
+    <string name="login_password_hint">******</string>
+    <string name="login_button_text">Iniciar sesión</string>
+    <string name="login_register_prompt">¿No tienes cuenta? Regístrate</string>
+    <string name="login_show_password">Mostrar</string> <!-- Por si usas el botón de mostrar pass -->
+
+    <!-- Pantalla de Registro -->
+    <string name="register_title">Crear Cuenta</string>
+    <string name="register_name_label">Nombre Completo</string>
+    <string name="register_name_hint">Juan Pérez</string>
+    <string name="register_button_text">Registrarse</string>
+    <string name="register_login_prompt">¿Ya tienes cuenta? Inicia sesión</string>
+
+    <!-- Mensajes de Error / Éxito (Los usaremos en Java luego) -->
+    <string name="error_empty_fields">Por favor llena todos los campos</string>
+    <string name="error_login_failed">Error al iniciar sesión</string>
+    <string name="success_welcome">¡Bienvenido!</string>
 </resources>
