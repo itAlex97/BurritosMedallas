@@ -1,8 +1,17 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+    <!-- Usamos 'NoActionBar' porque haremos nuestra propia barra bonita -->
     <style name="Base.Theme.BurritosMedallas" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+        <!-- Colores principales -->
+        <item name="colorPrimary">@color/burritos_orange</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:colorBackground">@color/burritos_background</item>
+
+        <!-- Color del texto -->
+        <item name="android:textColor">@color/burritos_text</item>
+
+        <!-- Color de la barra de estado (donde está la hora/batería) -->
+        <item name="android:statusBarColor">@color/burritos_orange</item>
     </style>
 
     <style name="Theme.BurritosMedallas" parent="Base.Theme.BurritosMedallas" />

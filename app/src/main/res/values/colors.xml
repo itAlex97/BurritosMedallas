@@ -2,4 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="burritos_orange">#D85A28</color> <!-- Naranja botones/header -->
+    <color name="burritos_background">#FFF9E1</color> <!-- Crema fondo -->
+    <color name="burritos_yellow">#FDD85D</color> <!-- Amarillo círculo -->
+    <color name="burritos_text">#3E2723</color> <!-- Café oscuro texto -->
+    <color name="burritos_hint">#8D6E63</color> <!-- Café claro para pistas -->
 </resources>
