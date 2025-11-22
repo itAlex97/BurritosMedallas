@@ -50,4 +50,6 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     // Librería moderna para Splash Screen
     implementation("androidx.core:core-splashscreen:1.0.1")
+    // FirebaseUI para Cloud Firestore (Facilita el RecyclerView)
+    implementation("com.firebaseui:firebase-ui-firestore:8.0.2")
 }
