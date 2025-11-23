@@ -112,5 +112,19 @@
             android:textStyle="bold"
             app:cornerRadius="12dp" />
 
+        <Button
+            android:id="@+id/btnDeleteProduct"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#D32F2F"
+            android:text="Borrar Producto"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:cornerRadius="12dp"
+            tools:visibility="visible" />
+
     </LinearLayout>
 </ScrollView>
