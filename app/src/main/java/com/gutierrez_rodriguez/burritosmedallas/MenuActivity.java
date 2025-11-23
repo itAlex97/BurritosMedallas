@@ -3,9 +3,11 @@ package com.gutierrez_rodriguez.burritosmedallas;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,9 +21,11 @@ public class MenuActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
-    // --- AHORA TENEMOS DOS ADAPTADORES ---
-    private ProductAdapter adapterComida;
-    private ProductAdapter adapterBebida;
+    // Variables para la lista ÚNICA
+    private RecyclerView recyclerView;
+    private ProductAdapter adapter;
+
+    private String userRole = "user";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +36,49 @@ public class MenuActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
+        // 1. RECUPERAR ROL Y CONFIGURAR FAB
+        if (getIntent().hasExtra("USER_ROLE")) {
+            userRole = getIntent().getStringExtra("USER_ROLE");
+        }
+        if ("admin".equals(userRole)) {
+            binding.fabAddProduct.setVisibility(View.VISIBLE);
+            Toast.makeText(this, "Modo Admin", Toast.LENGTH_SHORT).show();
+        } else {
+            binding.fabAddProduct.setVisibility(View.GONE);
+        }
+
+        binding.fabAddProduct.setOnClickListener(v -> {
+            Intent intent = new Intent(MenuActivity.this, AdminProductActivity.class);
+            intent.putExtra("MODE", "ADD");
+            startActivity(intent);
+        });
+
         setupSignOutButton();
 
-        // Configuramos las dos listas por separado
-        setupComidaList();
-        setupBebidaList();
+        // --- CONFIGURACIÓN DEL RECYCLERVIEW ÚNICO ---
+        recyclerView = binding.rvProducts;
+
+        // TRUCO PARA EVITAR EL CRASH: Desactivar animaciones predictivas
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this) {
+            @Override
+            public boolean supportsPredictiveItemAnimations() {
+                return false;
+            }
+        };
+        recyclerView.setLayoutManager(layoutManager);
+
+        // Consulta: Ordenamos por categoría DESCENDENTE (Z-A) para que 'C'omida salga antes que 'B'ebida
+        Query query = db.collection("products")
+                .whereEqualTo("available", true)
+                .orderBy("category", Query.Direction.DESCENDING)
+                .orderBy("name");
+
+        FirestoreRecyclerOptions<Product> options = new FirestoreRecyclerOptions.Builder<Product>()
+                .setQuery(query, Product.class)
+                .build();
+
+        adapter = new ProductAdapter(options);
+        recyclerView.setAdapter(adapter);
     }
 
     private void setupSignOutButton() {
@@ -47,57 +89,16 @@ public class MenuActivity extends AppCompatActivity {
         });
     }
 
-    // --- CONFIGURACIÓN LISTA DE COMIDA ---
-    private void setupComidaList() {
-        // 1. Consulta: Solo categoría 'comida' y disponibles, ordenados por nombre
-        Query queryComida = db.collection("products")
-                .whereEqualTo("available", true)
-                .whereEqualTo("category", "comida") // <--- FILTRO CLAVE
-                .orderBy("name");
-
-        FirestoreRecyclerOptions<Product> optionsComida = new FirestoreRecyclerOptions.Builder<Product>()
-                .setQuery(queryComida, Product.class)
-                .build();
-
-        adapterComida = new ProductAdapter(optionsComida);
-
-        // Usamos el ID nuevo rvComida
-        binding.rvComida.setLayoutManager(new LinearLayoutManager(this));
-        binding.rvComida.setAdapter(adapterComida);
-    }
-
-    // --- CONFIGURACIÓN LISTA DE BEBIDA ---
-    private void setupBebidaList() {
-        // 1. Consulta: Solo categoría 'bebida' y disponibles, ordenados por nombre
-        Query queryBebida = db.collection("products")
-                .whereEqualTo("available", true)
-                .whereEqualTo("category", "bebida") // <--- FILTRO CLAVE
-                .orderBy("name");
-
-        FirestoreRecyclerOptions<Product> optionsBebida = new FirestoreRecyclerOptions.Builder<Product>()
-                .setQuery(queryBebida, Product.class)
-                .build();
-
-        adapterBebida = new ProductAdapter(optionsBebida);
-
-        // Usamos el ID nuevo rvBebida
-        binding.rvBebida.setLayoutManager(new LinearLayoutManager(this));
-        binding.rvBebida.setAdapter(adapterBebida);
-    }
-
-
-    // --- CICLO DE VIDA (PARA LOS DOS ADAPTADORES) ---
+    // --- CICLO DE VIDA (UN SOLO ADAPTADOR) ---
     @Override
     protected void onStart() {
         super.onStart();
-        if (adapterComida != null) adapterComida.startListening();
-        if (adapterBebida != null) adapterBebida.startListening();
+        if (adapter != null) adapter.startListening();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        if (adapterComida != null) adapterComida.stopListening();
-        if (adapterBebida != null) adapterBebida.stopListening();
+        if (adapter != null) adapter.stopListening();
     }
 }

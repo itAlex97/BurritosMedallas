@@ -5,49 +5,81 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-// Importaciones de FirebaseUI y Firestore
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-// Importación del binding del diseño de item
 import com.gutierrez_rodriguez.burritosmedallas.databinding.ItemProductBinding;
 
 import java.text.NumberFormat;
 import java.util.Locale;
 
-// Esta clase extiende de FirestoreRecyclerAdapter, que hace la magia de Google.
-// Le decimos que usará nuestro modelo 'Product' y nuestro 'ProductViewHolder'.
 public class ProductAdapter extends FirestoreRecyclerAdapter<Product, ProductAdapter.ProductViewHolder> {
 
-    // Constructor: Recibe las opciones de configuración de Firebase
     public ProductAdapter(@NonNull FirestoreRecyclerOptions<Product> options) {
         super(options);
+        setHasStableIds(true);
     }
 
-    // MÉTODO 1: onBindViewHolder (Versión SIMPLE de nuevo)
+    @Override
+    public long getItemId(int position) {
+        return getSnapshots().getSnapshot(position).getId().hashCode();
+    }
+
     @Override
     protected void onBindViewHolder(@NonNull ProductViewHolder holder, int position, @NonNull Product model) {
-        // Solo llenamos los datos, sin lógica de cabeceras
+        // 1. Llenar datos normales
         holder.binding.tvProductName.setText(model.getName());
         holder.binding.tvProductDescription.setText(model.getDescription());
-
         NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
         holder.binding.tvProductPrice.setText(format.format(model.getPrice()));
+
+        // 2. Lógica de cabeceras
+        String currentCategory = model.getCategory();
+        String capitalizedCategory = currentCategory.substring(0, 1).toUpperCase() + currentCategory.substring(1);
+
+        boolean showHeader = false;
+
+        if (position == 0) {
+            showHeader = true;
+        } else {
+            try {
+                Product previousProduct = getItem(position - 1);
+                // Agregamos un chequeo extra de nulidad por seguridad
+                if (previousProduct != null && previousProduct.getCategory() != null) {
+                    if (!currentCategory.equals(previousProduct.getCategory())) {
+                        showHeader = true;
+                    }
+                }
+            } catch (Exception e) {
+                showHeader = false;
+            }
+        }
+
+        if (showHeader) {
+            holder.binding.tvSectionHeader.setVisibility(android.view.View.VISIBLE);
+            holder.binding.tvSectionHeader.setText(capitalizedCategory + "s");
+        } else {
+            holder.binding.tvSectionHeader.setVisibility(android.view.View.GONE);
+        }
     }
 
-    // MÉTODO 2: onCreateViewHolder
-    // Este método crea la tarjeta vacía la primera vez.
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Usamos ViewBinding para "inflar" (crear) el diseño de item_product.xml
         ItemProductBinding binding = ItemProductBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new ProductViewHolder(binding);
     }
 
+    // NUEVO: Este método se ejecuta cada vez que Firebase avisa de un cambio.
+    @Override
+    public void onDataChanged() {
+        super.onDataChanged();
+        // "Martillazo": Le decimos a la lista que se redibuje COMPLETA.
+        // Esto asegura que la lógica de comparar con el anterior (position - 1)
+        // se ejecute en orden correcto desde el principio hasta el final.
+        notifyDataSetChanged();
+    }
+    // FIN DE LO NUEVO
 
-    // CLASE INTERNA: ProductViewHolder
-    // Esta clasecita es la que "sostiene" los elementos visuales de una sola tarjeta.
-    // Usamos ViewBinding aquí para no usar findViewById nunca más.
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
         ItemProductBinding binding;
 

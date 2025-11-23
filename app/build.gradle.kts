@@ -52,4 +52,5 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.1")
     // FirebaseUI para Cloud Firestore (Facilita el RecyclerView)
     implementation("com.firebaseui:firebase-ui-firestore:8.0.2")
+    implementation("com.google.android.material:material:1.9.0")
 }
