@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot; // NUEVO
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.gutierrez_rodriguez.burritosmedallas.databinding.ActivityMenuBinding;
@@ -42,7 +42,7 @@ public class MenuActivity extends AppCompatActivity {
         }
         if ("admin".equals(userRole)) {
             binding.fabAddProduct.setVisibility(View.VISIBLE);
-            Toast.makeText(this, "Modo Admin: Toca un producto para editarlo", Toast.LENGTH_LONG).show(); // Mensaje actualizado
+            Toast.makeText(this, "Modo Admin: Viendo todos los productos (activos e inactivos)", Toast.LENGTH_LONG).show();
         } else {
             binding.fabAddProduct.setVisibility(View.GONE);
         }
@@ -66,11 +66,26 @@ public class MenuActivity extends AppCompatActivity {
         };
         recyclerView.setLayoutManager(layoutManager);
 
-        // Consulta: Ordenamos por categoría DESCENDENTE (Z-A) y luego por nombre
-        Query query = db.collection("products")
-                .whereEqualTo("available", true)
-                .orderBy("category", Query.Direction.DESCENDING)
-                .orderBy("name");
+
+        // --- NUEVA LÓGICA DE CONSULTA SEGÚN ROL ---
+        Query query;
+
+        if ("admin".equals(userRole)) {
+            // SI ES ADMIN: Traemos TODO (sin filtrar por 'available').
+            // Solo ordenamos por categoría y nombre.
+            query = db.collection("products")
+                    .orderBy("category", Query.Direction.DESCENDING)
+                    .orderBy("name");
+        } else {
+            // SI ES USER (o cualquier otro): Solo traemos los DISPONIBLES.
+            // Mantenemos el filtro original.
+            query = db.collection("products")
+                    .whereEqualTo("available", true)
+                    .orderBy("category", Query.Direction.DESCENDING)
+                    .orderBy("name");
+        }
+        // -------------------------------------------
+
 
         FirestoreRecyclerOptions<Product> options = new FirestoreRecyclerOptions.Builder<Product>()
                 .setQuery(query, Product.class)
@@ -79,39 +94,28 @@ public class MenuActivity extends AppCompatActivity {
         adapter = new ProductAdapter(options);
         recyclerView.setAdapter(adapter);
 
-        // 2. NUEVO: CONECTAR EL LISTENER DE CLICS
-        // Solo si es admin le hacemos caso a los clics en las tarjetas
+        // 2. CONECTAR EL LISTENER DE CLICS
         if ("admin".equals(userRole)) {
             adapter.setOnItemClickListener(new ProductAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
-                    // Aquí llega el documento de Firebase al que le dieron clic.
-                    // Obtenemos el objeto Product y su ID único.
                     Product product = documentSnapshot.toObject(Product.class);
                     String productId = documentSnapshot.getId();
-
-                    // Abrimos la pantalla de edición pasando los datos
                     openEditScreen(productId, product);
                 }
             });
         }
     }
 
-    // 3. NUEVO: Método auxiliar para abrir la pantalla de edición
     private void openEditScreen(String productId, Product product) {
         Intent intent = new Intent(MenuActivity.this, AdminProductActivity.class);
-        // Le decimos que vamos en modo "EDIT"
         intent.putExtra("MODE", "EDIT");
-        // Le pasamos el ID del producto a editar
         intent.putExtra("PRODUCT_ID", productId);
-
-        // Pasamos los datos actuales para rellenar el formulario (Opcional, pero más rápido)
         intent.putExtra("PROD_NAME", product.getName());
         intent.putExtra("PROD_DESC", product.getDescription());
         intent.putExtra("PROD_PRICE", product.getPrice());
         intent.putExtra("PROD_CAT", product.getCategory());
         intent.putExtra("PROD_AVAIL", product.isAvailable());
-
         startActivity(intent);
     }
 
