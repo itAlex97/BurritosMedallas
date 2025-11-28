@@ -4,22 +4,41 @@
     <!-- Pantalla de Login -->
     <string name="login_title">Inicio de sesión</string>
     <string name="login_email_label">Email</string>
-    <string name="login_email_hint">ejemplo@correo.com</string>
     <string name="login_password_label">Contraseña</string>
-    <string name="login_password_hint">******</string>
     <string name="login_button_text">Iniciar sesión</string>
-    <string name="login_register_prompt">¿No tienes cuenta? Regístrate</string>
-    <string name="login_show_password">Mostrar</string> <!-- Por si usas el botón de mostrar pass -->
+    <string name="login_register_prompt">¿No tienes cuenta? Regístrate.</string>
 
     <!-- Pantalla de Registro -->
-    <string name="register_title">Crear Cuenta</string>
-    <string name="register_name_label">Nombre Completo</string>
-    <string name="register_name_hint">Juan Pérez</string>
-    <string name="register_button_text">Registrarse</string>
-    <string name="register_login_prompt">¿Ya tienes cuenta? Inicia sesión</string>
+    <string name="register_title">Crear cuenta</string>
+    <string name="register_name_label">Nombre completo</string>
+    <string name="register_button_text">Registrarme</string>
+    <string name="register_login_prompt">¿Ya tienes cuenta? Inicia sesión.</string>
 
     <!-- Mensajes de Error / Éxito (Los usaremos en Java luego) -->
     <string name="error_empty_fields">Por favor llena todos los campos</string>
     <string name="error_login_failed">Error al iniciar sesión</string>
     <string name="success_welcome">¡Bienvenido!</string>
+
+    <!-- Pantalla de Admin Product -->
+    <string name="admin_title_add">Agregar Producto</string>
+    <string name="admin_hint_name">Nombre del producto</string>
+    <string name="admin_hint_description">Descripción (ingredientes)</string>
+    <string name="admin_hint_price">Precio ($)</string>
+    <string name="admin_radio_food">Comida</string>
+    <string name="admin_radio_drink">Bebida</string>
+    <string name="admin_switch_available">¿Está disponible para la venta?</string>
+    <string name="admin_btn_save">Guardar Producto</string>
+    <string name="admin_btn_delete">Borrar Producto</string>
+
+    <!-- Pantalla de Item Product -->
+    <string name="item_product_category_header">Categoría</string>
+    <string name="item_product_name_placeholder">Nombre del Burrito</string>
+    <string name="item_product_description_placeholder">Descripción breve de ingredientes</string>
+    <string name="item_product_price_placeholder">$0.00</string>
+
+    <!-- Pantalla de Menu -->
+    <string name="menu_title">Nuestro Menú</string>
+    <string name="menu_btn_logout">Salir</string>
+    <string name="menu_fab_add_description">Agregar Producto</string>
+
 </resources>

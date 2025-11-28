@@ -20,83 +20,72 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvNameLabel"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilName"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="@string/register_name_label"
-        android:textColor="@color/burritos_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitleReg" />
-
-    <EditText
-        android:id="@+id/etName"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/bg_edittext"
-        android:hint="@string/register_name_hint"
-        android:inputType="textPersonName"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:textColor="@color/burritos_text"
-        android:textColorHint="@color/burritos_hint"
+        android:hint="@string/register_name_label"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="@color/burritos_orange"
+        app:hintTextColor="@color/burritos_orange"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvNameLabel" />
+        app:layout_constraintTop_toBottomOf="@id/tvTitleReg">
 
-    <TextView
-        android:id="@+id/tvEmailLabelReg"
-        android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:textColor="@color/burritos_text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilEmailReg"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/login_email_label"
-        android:textColor="@color/burritos_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etName" />
-
-    <EditText
-        android:id="@+id/etEmailReg"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/bg_edittext"
-        android:hint="@string/login_email_hint"
-        android:inputType="textEmailAddress"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:textColor="@color/burritos_text"
-        android:textColorHint="@color/burritos_hint"
+        android:hint="@string/login_email_label"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="@color/burritos_orange"
+        app:hintTextColor="@color/burritos_orange"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvEmailLabelReg" />
+        app:layout_constraintTop_toBottomOf="@id/tilName">
 
-    <TextView
-        android:id="@+id/tvPassLabelReg"
-        android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etEmailReg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/burritos_text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilPasswordReg"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/login_password_label"
-        android:textColor="@color/burritos_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etEmailReg" />
-
-    <EditText
-        android:id="@+id/etPasswordReg"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/bg_edittext"
-        android:hint="@string/login_password_hint"
-        android:inputType="textPassword"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:textColor="@color/burritos_text"
-        android:textColorHint="@color/burritos_hint"
+        android:hint="@string/login_password_label"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="@color/burritos_orange"
+        app:hintTextColor="@color/burritos_orange"
+        app:endIconMode="password_toggle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvPassLabelReg" />
+        app:layout_constraintTop_toBottomOf="@id/tilEmailReg">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPasswordReg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:textColor="@color/burritos_text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btnRegister"
@@ -110,7 +99,7 @@
         app:cornerRadius="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etPasswordReg" />
+        app:layout_constraintTop_toBottomOf="@id/tilPasswordReg" />
 
     <TextView
         android:id="@+id/tvLoginLink"

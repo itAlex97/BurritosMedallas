@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:text="Agregar Producto"
+            android:text="@string/admin_title_add"
             android:textColor="@color/burritos_text"
             android:textSize="28sp"
             android:textStyle="bold" />
@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:hint="Nombre del producto">
+            android:hint="@string/admin_hint_name">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etProdName"
@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:hint="Descripción (ingredientes)">
+            android:hint="@string/admin_hint_description">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etProdDesc"
@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginEnd="8dp"
-                android:hint="Precio ($)">
+                android:hint="@string/admin_hint_price">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etProdPrice"
@@ -83,13 +83,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
-                    android:text="Comida" />
+                    android:text="@string/admin_radio_food" />
 
                 <RadioButton
                     android:id="@+id/rbBebida"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Bebida" />
+                    android:text="@string/admin_radio_drink" />
             </RadioGroup>
         </LinearLayout>
 
@@ -99,7 +99,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             android:checked="true"
-            android:text="¿Está disponible para la venta?"
+            android:text="@string/admin_switch_available"
             android:textSize="16sp" />
 
         <Button
@@ -107,7 +107,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:backgroundTint="@color/burritos_orange"
-            android:text="Guardar Producto"
+            android:text="@string/admin_btn_save"
             android:textSize="18sp"
             android:textStyle="bold"
             app:cornerRadius="12dp" />
@@ -118,7 +118,7 @@
             android:layout_height="60dp"
             android:layout_marginTop="16dp"
             android:backgroundTint="#D32F2F"
-            android:text="Borrar Producto"
+            android:text="@string/admin_btn_delete"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
